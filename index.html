@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ぼくれぽーと</title>
+
+    <!--Google Fonts（必須）-->
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
+
+    <!--NES.css-->
+    <link href="https://unpkg.com/nes.css@latest/css/nes.min.css" rel="stylesheet" />
+
+    <style>
+        body {
+            font-family: 'Press Start 2P', 'DotGothic16', cursive;
+            padding: 20px;
+            background-image: url("images/RetoroDotBackground.png");
+            background-size: 100% auto;
+            background-repeat: repeat-y;
+            background-position: top center;
+            color: #000000;
+        }
+
+        .dotgothic16-regular {
+            font-family: "DotGothic16", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        .container {
+            max-width: 980px;
+            margin: 0 auto;
+        }
+
+        /* ゲーム風のタイトル */
+        .title-screen {
+            font-family: 'DotGothic16', sans-serif; 
+            text-align: center;
+            margin-bottom:40px;
+        }
+
+        /*入力フォームエリア 別提案アリ！*/
+        .game-window {
+            margin-bottom: 20px;
+        }
+
+        /*チェックボックス・タグエリア*/
+        .tags-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 3fr);
+            gap: 5px 5px;
+            margin-top: 10px;
+        }
+
+        /*プレビューエリア*/
+        #preview {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .nes-container, .nes-btn, .nes-input {
+            font-family: 'Press Start 2P', 'DotGothic16', cursive !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!--タイトル画面-->
+        <div class="title-screen">
+            <h1>ぼくれぽーと</h1>
+            <p>ぼくはれぽーとにしっかりとかきのこした！▼</p>
+        </div>
+
+        <!--入力フォーム（ゲーム風）-->
+        <div class="nes-container is-dark game-window">
+            <h2 class="nes-text">じょうほうをにゅうりょくしてね▼</h2>
+
+            <form id="movie-form">
+                <!--名前の入力-->
+                <div class="nes-field">
+                    <label for="title">ぼくのまなえ▼</label>
+                    <input type="text" id="myname" class="nes-input is-dark" placeholder="きみのなまえは？" required>
+                </div>
+
+                <div style="height: 10px;"></div> <!-- ここで高さを自由に指定 -->
+
+                <!--ジャンル選択-->
+                <div class="nes-field">
+                    <label for="genre">ぶんるい▼</label>
+                    <div class="nes-select">
+                        <select id="genre" required>
+                            <option value="">せんたくしてください▼</option>
+                            <option value="anime">あにめ</option>
+                            <option value="comic">まんが</option>
+                            <option value="movie">えいが</option>
+                            <option value="game">げえむ</option>
+                            <option value="novel">しょうせつ</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!--タイトル入力-->
+                <div class="nes-field">
+                    <label for="title">さくひんのまなえ▼</label>
+                    <input type="text" id="title" class="nes-input is-dark" placeholder="例：ショーシャンクの空に" required>
+                </div>
+
+                <div style="height: 10px;"></div> <!-- ここで高さを自由に指定 -->
+
+                <!--作品の画像-->
+                <div class="nes-field">
+                    <label for="image-upload">さくひんのがぞう▼</label>
+                    <input type="file" id="image-upload" accept="image/*" style="display: none;">
+                    <button type="button" class="nes-btn" id="upload-btn">
+                        がぞうをえらぶ
+                    </button>
+                    <p id="file-name" style="font-size: 12px; color: #aaa; margin-top: 5px;">
+                        てんぷれーとがぞうをしようちゅう！
+                        ※画像はご自身で権利を有するもの、または利用許可のあるものをご使用ください。
+                    </p>
+                </div>
+
+                <!--あらすじ-->
+                <div class="nes-field">
+                    <label for="synopsis">あらすじ▼</label>
+                    <textarea id="synopsis" class="nes-textarea is-dark" rows="3" placeholder="ものがたりをおしえてね！"></textarea>
+                </div>
+
+                <div style="height: 10px;"></div> <!-- ここで高さを自由に指定 -->
+                
+                <!--推しポイント-->
+                <div class="nes-field">
+                    <label for="recommend">ぼくのれぽーと▼</label>
+                    <textarea id="recommend" class="nes-textarea is-dark" rows="3" placeholder="あなたのすきはどんなところ？"></textarea>
+                </div>
+
+                <div style="height: 10px;"></div> <!-- ここで高さを自由に指定 -->
+
+                <!--タグ選択（チェックボックス）-->
+                <div class="nes-field">
+                    <label>じゃんるをえらぶ▼</label>
+                    <div class="tags-grid">
+                        <label>
+                            <input type="checkbox" class="nes-checkbox is-dark" value="かんどう">
+                            <span>かんどう</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" class="nes-checkbox is-dark" value="ばくしょう">
+                            <span>ばくしょう</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" class="nes-checkbox is-dark" value="せいしゅん">
+                            <span>せいしゅん</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" class="nes-checkbox is-dark" value="ねっけつ">
+                            <span>ねっけつ</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" class="nes-checkbox is-dark" value="あくしょん">
+                            <span>あくしょん</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" class="nes-checkbox is-dark" value="れんあい">
+                            <span>れんあい</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" class="nes-checkbox is-dark" value="ぼうけん">
+                            <span>ぼうけん</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" class="nes-checkbox is-dark" value="どきゅめんたりー">
+                            <span>どきゅめんたりー</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" class="nes-checkbox is-dark" value="どうぶつ">
+                            <span>どうぶつ</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" class="nes-checkbox is-dark" value="ほらー">
+                            <span>ほらー</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" class="nes-checkbox is-dark" value="ひとこわ">
+                            <span>ひとこわ</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" class="nes-checkbox is-dark" value="れきし">
+                            <span>れきし</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" class="nes-checkbox is-dark" value="せんそう">
+                            <span>せんそう</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" class="nes-checkbox is-dark" value="ひゅーまん">
+                            <span>ひゅーまん</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" class="nes-checkbox is-dark" value="ふぁんたじー">
+                            <span>ふぁんたじー</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" class="nes-checkbox is-dark" value="のんふぃくしょん">
+                            <span>のんふぃくしょん</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" class="nes-checkbox is-dark" value="みゅーじかる">
+                            <span>みゅーじかる</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" class="nes-checkbox is-dark" value="みすてりー">
+                            <span>みすてりー</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" class="nes-checkbox is-dark" value="えすえふ">
+                            <span>えすえふ</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" class="nes-checkbox is-dark" value="どうぶつがしなない">
+                            <span>どうぶつがしなない</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!--背景選択-->
+                <div class="nes-field">
+                    <label for="background">はいけいをえらぶ▼</label>
+                    <div class="nes-select">
+                        <select id="background" required>
+                            <option value="">せんたくしてね</option>
+                            <option value="custom">じぶんのよういしたがぞう！</option>
+                            <option value="black">くろ</option>
+                            <option value="red">あか</option>
+                            <option value="blue">あお</option>
+                            <option value="yellow">きいろ</option>
+                            <option value="green">みどり</option>
+                            <option value="orangi">おれんじ</option>
+                            <option value="purple">むらさき</option>
+                            <option value="brown">ちゃいろ</option>
+                            <option value="pink">ももいろ</option>
+                            <option value="gray">はいいろ</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!--カスタム背景画像アップロード-->
+                <div class="nes-field" id="custom-background-field" style="display: none;">
+                    <label for="custom-background">はいけいのがぞう▼</label>
+                    <input type="file" id="custom-background" accept="image/*">
+                </div>
+            </form>
+        </div>
+
+        <br><!--改行<br>-->
+
+        <!--プレビューエリア-->
+        <div class="nes-container is-rounded">
+            <h3>こんなかんじ！▼</h3>
+            <div id="preview">
+                <!--ここに生成される画像のプレビュー-->
+                <p class="nes-text is-disabled">ここにぷれいびゅーがひょうじされるよ！▼</p>
+            </div>
+        </div>
+
+        <!--アクションボタン-->
+        <div style="text-align: center; margin-top: 20px;">
+            <button type="button" class="nes-btn is-primary" id="generate-btn">れぽーとにかきのこす</button>
+            <button type="button" class="nes-btn is-success" id="download-btn" style="display: none;">だうんろーど</button>
+            <button type="button" class="nes-btn is-primary" id="share-x-btn" style="display: none;">えっくすでぽすとする</button>
+        </div>
+    </div>
+    
+    <!--html 2canvas-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
