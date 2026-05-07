@@ -74,7 +74,7 @@ function updatePreview() {
 
     //入力が無い場合は初期メッセージを表示
     if (!genre && !title && !synopsis && !recommend && tags.length === 0) {
-        preview.innerHTML = '<p class="nes-text is-disabled" style="color: #999;">ぷれいびゅーがひょうじされるよ！▼</p>';
+        preview.innerHTML = '<p class="nes-text is-disabled" style="color: #999999;">ぷれいびゅーがひょうじされるよ！▼</p>';
         return;
     }
 

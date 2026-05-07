@@ -19,7 +19,7 @@
         body {
             font-family: 'Press Start 2P', 'DotGothic16', cursive;
             padding: 20px;
-            background-image: url("images/RetoroDotBackground.png");
+            background-image: url("images/RetoroBackground3.png");
             background-size: 100% auto;
             background-repeat: repeat-y;
             background-position: top center;
@@ -73,8 +73,10 @@
     <div class="container">
         <!--タイトル画面-->
         <div class="title-screen">
-            <h1>ぼくれぽーと</h1>
-            <p>ぼくはれぽーとにしっかりとかきのこした！▼</p>
+            <div class="nes-container is-dark game-window" style="max-width: 600px; margin: 0 auto;">
+                <h1 class="nes-text is primary" style="text-align: center;">ぼくれぽーと</h1>
+                <p style="text-align: center; margin-top: 10px;">ぼくはれぽーとにしっかりとかきのこした！▼</p>
+            </div>
         </div>
 
         <!--入力フォーム（ゲーム風）-->
@@ -261,11 +263,11 @@
         <br><!--改行<br>-->
 
         <!--プレビューエリア-->
-        <div class="nes-container is-rounded">
+        <div class="nes-container" style="background: rgba(255, 255, 255, 0.5);">
             <h3>こんなかんじ！▼</h3>
             <div id="preview">
                 <!--ここに生成される画像のプレビュー-->
-                <p class="nes-text is-disabled">ここにぷれいびゅーがひょうじされるよ！▼</p>
+                <p class="nes-text is-disabled" style="color: #7e7e7e;">ここにぷれいびゅーがひょうじされるよ！▼</p>
             </div>
         </div>
 
