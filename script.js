@@ -7,15 +7,15 @@ document.getElementById('movie-form').addEventListener('input', updatePreview);
 //背景画像のURLを定義
 const backgroundImages = {
     black: { type: 'color', value: '#000000' },
-    brown: { type: 'color', value: '#866347' },
-    pink: { type: 'color', value: '#ffabd2' },
-    blue: { type: 'color', value: '#1692f7' },
-    green: { type: 'color', value: '#81e085' },
-    red: { type: 'color', value: '#ff5858' },
-    purple: { type: 'color', value: '#b775ee' },
-    yellow: { type: 'color', value: '#fff134' },
-    orangi: { type: 'color', value: '#ffad50' },
-    gray: { type: 'color', value: '#949494' },
+    brown: { type: 'color', value: '#855630' },
+    pink: { type: 'color', value: '#ff6cb1' },
+    blue: { type: 'color', value: '#5970ee' },
+    green: { type: 'color', value: '#40cf23' },
+    red: { type: 'color', value: '#fd3d3d' },
+    purple: { type: 'color', value: '#ac38f0' },
+    yellow: { type: 'color', value: '#fff12f' },
+    orangi: { type: 'color', value: '#ff9720' },
+    gray: { type: 'color', value: '#6d6e6e' },
     image1: { type: 'image', value: 'images/DotBg.png' },
     image2: { type: 'image', value: 'images/CheckBg.png' },
     image3: { type: 'image', value: 'images/RetroBg.png' },
@@ -40,6 +40,16 @@ document.getElementById('background').addEventListener('change', function() {
     updatePreview();
 });
 
+// 透過度スライダーのイベントリスナーを追加
+document.getElementById('opacity-slider').addEventListener('input', function() {
+    const value = this.value;
+    document.getElementById('opacity-value').textContent = value + '%';
+    updatePreview();
+});
+
+//彩度調整スライダーのイベントリスナーを追加
+document.getElementById('saturation-slider').addEventListener('input', updatePreview);
+
 //カスタム背景画像アップロード時の処理
 document.getElementById('custom-background').addEventListener('change', function(e) {
     const file = e.target.files[0];
@@ -62,6 +72,8 @@ function updatePreview() {
     const recommend = document.getElementById('recommend').value;
     const myname = document.getElementById('myname').value;
     const background = document.getElementById('background').value;
+    const saturationValue = document.getElementById('saturation-slider').value;//彩度調整の値を取得
+    const opacityValue = document.getElementById('opacity-slider').value; // 透過度を取得
 
     //チェックされたタグを取得
     const tags = [];
@@ -102,86 +114,105 @@ function updatePreview() {
         }
     }
 
+    //彩度調整用のfilterスタイルを作成
+    const saturation = saturationValue;
+    const brightness = saturationValue <= 100
+        ? 100 + (100 - saturationValue) * 0.3
+        : 100;
+    const filterStyle = `filter: saturate(${saturation}%)brightness(${brightness}%);`;
+
+    // 透過度のスタイルを作成(追加)
+    const opacity = opacityValue / 100;
+    const opacityStyle = `opacity: ${opacity};`;
+
     console.log("最終的な背景のスタイル:", backgroundStyle);
 
     //プレビュー用のHTMLを生成（ゲーム風デザイン）
     preview.innerHTML = `
-        <div style="font-family: 'Press Start 2P', 'DotGothic16', cursive; color: #212529; padding: 20px; ${backgroundStyle} border: 4px solid #000; border-radius: 0px; box-shadow: 8px 8px 0px rgba(0,0,0,0.3); min-height: 300px;">
+        <div style="position: relative; font-family: 'Press Start 2P', 'DotGothic16', cursive; color: #212529; padding: 20px; border: 4px solid #000; border-radius: 0px; box-shadow: 8px 8px 0px rgba(0,0,0,0.3); min-height: 300px; overflow: hidden;">
 
-            <!--タイトル部分-->
-            <div style="background: #000000; color: #fff; padding: 10px; margin: -20px -20px 15px -20px; text-align: center;">
-                <h2 style="font-size: 16px; margin: 0;">
-                    <span style="color: #fff;">${displayName}</span>のれぽーと
-                </h2>
-            </div>
+            <!--背景レイヤー（filterとopactityを適用）-->
+            <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; ${backgroundStyle} ${filterStyle} ${opacityStyle}"></div>
 
-            <!--上部エリア（画像＋基本情報）-->
-            <div style="display: flex; gap: 15px; margin-bottom: 15px;">
 
-                <!--画像表示（アップロードされた画像）-->
-                ${uploadedImageData ? `
-                    <div style="flex-shrink: 0; width: 180px; border: 3px solid #000; background:#fff; padding: 5px;">
-                        <img src="${uploadedImageData}"
-                           style="width: 100%; height: auto; display: block;">
-                    </div>
-                ` : `
-                    <div style="flex-shrink: 0; width: 180px; border: 3px solid #000; background: #fff; padding: 5px;">
-                        <img src="images/TemplateRm2.png"
+            <!--コンテンツレイヤー（filterの影響を受けない）-->
+            <div style="position: relative; z-index: 1;">
+
+                <!--タイトル部分-->
+                <div style="background: #000000; color: #fff; padding: 10px; margin: -20px -20px 15px -20px; text-align: center;">
+                    <h2 style="font-size: 16px; margin: 0;">
+                        <span style="color: #fff;">${displayName}</span>のれぽーと
+                    </h2>
+                </div>
+
+                <!--上部エリア（画像＋基本情報）-->
+                <div style="display: flex; gap: 15px; margin-bottom: 15px;">
+
+                    <!--画像表示（アップロードされた画像）-->
+                    ${uploadedImageData ? `
+                        <div style="flex-shrink: 0; width: 180px; border: 3px solid #000; background:#fff; padding: 5px;">
+                            <img src="${uploadedImageData}"
                             style="width: 100%; height: auto; display: block;">
-                    </div>
-                `}                   
-
-                <!--右側：タイトル、ジャンル、タグ-->
-                <div style="flex: 1; display: flex; flex-direction: column; gap: 10px;">
-
-                    <!--タイトル表示-->
-                    ${title ? `
-                        <div style="background: rgba(255, 255, 255, 0.7); border: 3px solid #000; padding: 8px;">
-                            <p style="font-size: 10px; margin: 0;">
-                                <span style="color: #222222;">たいとる：</span>${escapeHtml(title)}
-                            </p>
                         </div>
-                    ` : ''}
-
-                    <!--ジャンル表示-->
-                    ${genre ? `
-                        <div style="background: rgba(255, 255, 255, 0.7); border: 3px solid #000; padding: 8px;">
-                            <p style="font-size: 10px; margin: 0;">
-                                <span style="color: #222222;">ぶんるい：</span>${getGenreText(genre)}
-                            </p>
+                    ` : `
+                        <div style="flex-shrink: 0; width: 180px; border: 3px solid #000; background: #fff; padding: 5px;">
+                            <img src="images/TemplateRm2.png"
+                                style="width: 100%; height: auto; display: block;">
                         </div>
-                    ` : ''}
+                    `}                   
 
-                    <!--タグ表示-->
-                    ${tags.length > 0 ? `
-                        <div style="background-color: rgba(255, 255, 255, 0.7); border: 3px solid #000; padding: 8px;">
-                            <div style="display: flex; flex-wrap: wrap; gap: 5px;">
-                                ${tags.map(tag => `<span style="background-color: #667eea; color: #fff; padding: 3px 8px; border-radius: 4px; font-size: 8px;">▼${escapeHtml(tag)}</span>`).join('')}
+                    <!--右側：タイトル、ジャンル、タグ-->
+                    <div style="flex: 1; display: flex; flex-direction: column; gap: 10px;">
+
+                        <!--タイトル表示-->
+                        ${title ? `
+                            <div style="background: rgba(255, 255, 255, 0.7); border: 3px solid #000; padding: 8px;">
+                                <p style="font-size: 10px; margin: 0;">
+                                    <span style="color: #222222;">たいとる：</span>${escapeHtml(title)}
+                                </p>
                             </div>
-                        </div>
-                    ` : ''}
-                </div>
-            </div>  
+                        ` : ''}
 
-            <!--あらすじ表示-->
-            ${synopsis ? `
-                <div style="background: rgba(255, 255, 255, 0.7); border: 3px solid #000; padding: 10px; margin-bottom: 10px;">
-                    <p style="font-size: 10px; font-weight: bold; margin-bottom: 5px; color: #222222; text-align: left;">
-                        あらすじ▼
-                    </p>
-                    <p style="font-size: 9px; line-height: 1.6; margin: 0; white-space: pre-wrap; text-align: left;">${escapeHtml(synopsis)}</p>
-                </div>
-            ` : ''}
+                        <!--ジャンル表示-->
+                        ${genre ? `
+                            <div style="background: rgba(255, 255, 255, 0.7); border: 3px solid #000; padding: 8px;">
+                                <p style="font-size: 10px; margin: 0;">
+                                    <span style="color: #222222;">ぶんるい：</span>${getGenreText(genre)}
+                                </p>
+                            </div>
+                        ` : ''}
 
-            <!--ぼくのれぽーと-->
-            ${recommend ? `
-                <div style="background: rgba(255, 255, 255, 0.7); border: 3px solid #000; padding: 10px; margin-bottom: 10px;">
-                    <p style="font-size: 10px; font-weight: bold; margin-bottom: 5px; color: #222222; text-align: left;">
-                        <span style="color: #222222;">${displayName}</span>のれぽーと▼
-                    </p>
-                    <p style="font-size: 9px; line-height: 1.6; margin: 0; white-space: pre-wrap; text-align: left;">${escapeHtml(recommend)}</p>
-                </div>
-            ` : ''}
+                        <!--タグ表示-->
+                        ${tags.length > 0 ? `
+                            <div style="background-color: rgba(255, 255, 255, 0.7); border: 3px solid #000; padding: 8px;">
+                                <div style="display: flex; flex-wrap: wrap; gap: 5px;">
+                                    ${tags.map(tag => `<span style="background-color: #667eea; color: #fff; padding: 3px 8px; border-radius: 4px; font-size: 8px;">▼${escapeHtml(tag)}</span>`).join('')}
+                                </div>
+                            </div>
+                        ` : ''}
+                    </div>
+                </div>  
+
+                <!--あらすじ表示-->
+                ${synopsis ? `
+                    <div style="background: rgba(255, 255, 255, 0.7); border: 3px solid #000; padding: 10px; margin-bottom: 10px;">
+                        <p style="font-size: 15px; font-weight: bold; margin-bottom: 5px; color: #222222; text-align: left;">
+                            あらすじ▼
+                        </p>
+                        <p style="font-size: 14px; line-height: 1.6; margin: 0; white-space: pre-wrap; text-align: left;">${escapeHtml(synopsis)}</p>
+                    </div>
+                ` : ''}
+
+                <!--ぼくのれぽーと-->
+                ${recommend ? `
+                    <div style="background: rgba(255, 255, 255, 0.7); border: 3px solid #000; padding: 10px; margin-bottom: 10px;">
+                        <p style="font-size: 15px; font-weight: bold; margin-bottom: 5px; color: #222222; text-align: left;">
+                            <span style="color: #222222;">${displayName}</span>のれぽーと▼
+                        </p>
+                        <p style="font-size: 14px; line-height: 1.6; margin: 0; white-space: pre-wrap; text-align: left;">${escapeHtml(recommend)}</p>
+                    </div>
+                ` : ''}
+            </div>
         </div>
     `;
 

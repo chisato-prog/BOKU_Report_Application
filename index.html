@@ -46,7 +46,36 @@
 
         /*入力フォームエリア 別提案アリ！*/
         .game-window {
-            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .game-window h2 {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .game-window label {
+            font-size: 14px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .game-window .nes-input,
+        .game-window .nes-textarea,
+        .game-window .nes-select select {
+            font-size: 15px;
+        }
+
+        .game-window .nes-checkbox + span {
+            font-size: 12px;
+        }
+
+        .game-window .nes-btn {
+            font-size: 12px;
+        }
+
+        .game-window #file-name {
+            font-size: 10px;
         }
 
         /*チェックボックス・タグエリア*/
@@ -131,7 +160,7 @@
                 <!--あらすじ-->
                 <div class="nes-field">
                     <label for="synopsis">あらすじ▼</label>
-                    <textarea id="synopsis" class="nes-textarea is-dark" rows="3" placeholder="ものがたりをおしえてね！"></textarea>
+                    <textarea id="synopsis" class="nes-textarea is-dark" rows="4" placeholder="ものがたりをおしえてね！"></textarea>
                 </div>
 
                 <div style="height: 10px;"></div> <!-- ここで高さを自由に指定 -->
@@ -139,7 +168,7 @@
                 <!--推しポイント-->
                 <div class="nes-field">
                     <label for="recommend">ぼくのれぽーと▼</label>
-                    <textarea id="recommend" class="nes-textarea is-dark" rows="3" placeholder="あなたのすきはどんなところ？"></textarea>
+                    <textarea id="recommend" class="nes-textarea is-dark" rows="4" placeholder="あなたのすきはどんなところ？"></textarea>
                 </div>
 
                 <div style="height: 10px;"></div> <!-- ここで高さを自由に指定 -->
@@ -256,6 +285,32 @@
                 <div class="nes-field" id="custom-background-field" style="display: none;">
                     <label for="custom-background">はいけいのがぞう▼</label>
                     <input type="file" id="custom-background" accept="image/*">
+                </div>
+
+                <div style="height: 5px;"></div> <!-- ここで高さを自由に指定 -->
+
+                <p style="font-size: 14px; color: #ffffff; margin-top: 0px; margin-bottom: 1px;">
+                    はいけいのちょうせい▼
+                </p>
+                <!-- スライダーを横並びに配置するための親要素 -->
+                <div style="display: flex; gap: 30px; align-items: flex-start; margin-top: 2px; margin-bottom: 1px;">
+                    <!--背景再度調整-->
+                    <div class="ness-field">
+                        <label for="saturation-slider" style="font-size: 12px; margin-bottom: 1px;">さいどのちょうせい</label>
+                        <input type="range" id="saturation-slider" min="0" max="200" value="100" step="10" style="width: 200px;">
+                        <p style="font-size: 12px; color: #aaa; margin-top: 1px;">
+                            　◀くすみ　　　　　 くっきり▶
+                        </p>
+                    </div>
+
+                    <!-- 透過度調整スライダー(新規追加) -->
+                    <div class="nes-field">
+                        <label for="opacity-slider" style="font-size: 12px; margin-bottom: 1px;">とうかのちょうせい</label>
+                        <input type="range" id="opacity-slider" min="0" max="200" value="100" step="10" style="width: 200px;">
+                        <p style="font-size: 12px; color: #aaa; margin-top: 1px;">
+                            　◀うすい　　　　　　　　こい▶
+                        </p>
+                    </div>
                 </div>
             </form>
         </div>
