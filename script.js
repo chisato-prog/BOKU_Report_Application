@@ -167,7 +167,7 @@ function updatePreview() {
                         <!--タイトル表示-->
                         ${title ? `
                             <div style="background: rgba(255, 255, 255, 0.7); border: 3px solid #000; padding: 8px;">
-                                <p style="font-size: 10px; margin: 0;">
+                                <p style="font-size: 14px; margin: 0;">
                                     <span style="color: #222222;">たいとる：</span>${escapeHtml(title)}
                                 </p>
                             </div>
@@ -176,7 +176,7 @@ function updatePreview() {
                         <!--ジャンル表示-->
                         ${genre ? `
                             <div style="background: rgba(255, 255, 255, 0.7); border: 3px solid #000; padding: 8px;">
-                                <p style="font-size: 10px; margin: 0;">
+                                <p style="font-size: 14px; margin: 0;">
                                     <span style="color: #222222;">ぶんるい：</span>${getGenreText(genre)}
                                 </p>
                             </div>
@@ -196,7 +196,7 @@ function updatePreview() {
                 <!--あらすじ表示-->
                 ${synopsis ? `
                     <div style="background: rgba(255, 255, 255, 0.7); border: 3px solid #000; padding: 10px; margin-bottom: 10px;">
-                        <p style="font-size: 15px; font-weight: bold; margin-bottom: 5px; color: #222222; text-align: left;">
+                        <p style="font-size: 14px; font-weight: bold; margin-bottom: 5px; color: #222222; text-align: left;">
                             あらすじ▼
                         </p>
                         <p style="font-size: 14px; line-height: 1.6; margin: 0; white-space: pre-wrap; text-align: left;">${escapeHtml(synopsis)}</p>
@@ -206,7 +206,7 @@ function updatePreview() {
                 <!--ぼくのれぽーと-->
                 ${recommend ? `
                     <div style="background: rgba(255, 255, 255, 0.7); border: 3px solid #000; padding: 10px; margin-bottom: 10px;">
-                        <p style="font-size: 15px; font-weight: bold; margin-bottom: 5px; color: #222222; text-align: left;">
+                        <p style="font-size: 14px; font-weight: bold; margin-bottom: 5px; color: #222222; text-align: left;">
                             <span style="color: #222222;">${displayName}</span>のれぽーと▼
                         </p>
                         <p style="font-size: 14px; line-height: 1.6; margin: 0; white-space: pre-wrap; text-align: left;">${escapeHtml(recommend)}</p>
@@ -230,7 +230,8 @@ function getGenreText(genre) {
         'comic': 'まんが',
         'movie': 'えいが',
         'game': 'げえむ',
-        'novel': 'しょうせつ'
+        'novel': 'しょうせつ',
+        'stage': 'ぶたい'
     };
     return genreMap[genre] || genre;
 }
