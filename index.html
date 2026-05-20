@@ -61,9 +61,13 @@
         }
 
         .game-window .nes-input,
-        .game-window .nes-textarea,
+        .game-window .nes-textarea {
+            font-size: 15px;
+        }
+
         .game-window .nes-select select {
             font-size: 15px;
+            color: #000000;
         }
 
         .game-window .nes-checkbox + span {
@@ -76,6 +80,62 @@
 
         .game-window #file-name {
             font-size: 10px;
+        }
+
+        /* アイコン選択グリッド */
+        .icon-select-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 4px 4px;
+            margin-top: -5px;
+        }
+
+        /* 各アイコンオプション */
+        .icon-option {
+            display: flex;
+            align-items: flex-end;
+            gap: 0;
+            white-space: nowrap; /* ★テキストを改行させない★ */
+            flex-shrink: 0; /* ★縮小を防ぐ★ */
+            padding: 0px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: -5px;
+        }
+
+        .icon-option:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* アイコンとテキストのラベル部分 */
+        .icon-label {
+            display: flex;
+            align-items: center;
+            gap: 8;
+            flex: 1;
+        }
+
+        /* アイコン画像 */
+        .icon-preview {
+            width: 35px;
+            height: 35px;
+            object-fit: contain;
+        }
+
+        /* アイコンのテキスト */
+        .icon-text {
+            font-size: 14px;
+            color: #fff;
+        }
+
+        /* レスポンシブ対応 */
+        @media (max-width: 600px) {
+            .icon-select-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); /* 自動的に列を配置 */
+                gap: 5px 15px; /* ★縦方向5px、横方向15pxに変更★ */
+                margin-top: 1px;
+            }
         }
 
         /*チェックボックス・タグエリア*/
@@ -126,7 +186,7 @@
                     <label for="genre">ぶんるい▼</label>
                     <div class="nes-select">
                         <select id="genre" required>
-                            <option value="">せんたくしてください▼</option>
+                            <option value="">せんたくしてね！</option>
                             <option value="anime">あにめ</option>
                             <option value="comic">まんが</option>
                             <option value="movie">えいが</option>
@@ -282,8 +342,8 @@
                     <label for="background">はいけいをえらぶ▼</label>
                     <div class="nes-select">
                         <select id="background" required>
-                            <option value="">せんたくしてね</option>
-                            <option value="custom">じぶんのよういしたがぞう！</option>
+                            <option value="">せんたくしてね！</option>
+                            <option value="custom">じぶんのよういしたがぞう</option>
                             <option value="black">くろ</option>
                             <option value="red">あか</option>
                             <option value="blue">あお</option>
@@ -327,6 +387,96 @@
                         <p style="font-size: 12px; color: #aaa; margin-top: 1px;">
                             　◀うすい　　　　　　　　こい▶
                         </p>
+                    </div>
+                </div>
+
+                <!--アイコン選択(NES.cssのラジオボタン使用)-->
+                <div class="nes-field">
+                    <!-- ①ラベルと注釈を横並びにする -->
+                    <div style="display: flex; align-items: baseline; gap: 3px; margin-bottom: 10px;">
+                        <label style="margin: 0;">たいとるにひょうじするあいこん▼</label>
+                        <p style="font-size: 12px; color: #aaa; margin: 0;">※１つだけえらんでね！</p>
+                    </div>
+
+                    <div class="icon-select-grid">
+                        <!-- ②「ひょうじしないよ!」を初期設定(checked属性を付ける) -->
+                        <label class="icon-option"  style="margin-bottom: -10px;  padding-left: 10px;">
+                            <input type="radio" class="nes-radio is-dark" name="title-icon" value="none" checked>
+                            <span class="icon-label"  style="font-size: 12px; color: #ffffff; margin-top: -7px; margin-bottom: 0px;  padding-left: 10px;">なし</span>
+                        </label>
+
+                        <!-- ③ここで改行を入れる(親要素横幅いっぱいを指定し、改行) -->
+                        <div style="grid-column: 1 / -1;"></div>
+
+                        <label class="icon-option" style="padding-left: 10px;">
+                            <input type="radio" class="nes-radio is-dark" name="title-icon" value="anime">
+                            <span class="icon-label">
+                                <img src="icon/anime-icon.png" alt="anime" class="icon-preview">
+                            </span>
+                        </label>
+                            
+                        <label class="icon-option">
+                            <input type="radio" class="nes-radio is-dark" name="title-icon" value="comic">
+                            <span class="icon-label">
+                                <img src="icon/comic-icon.png" alt="comic" class="icon-preview">
+                            </span>
+                        </label>
+        
+                        <label class="icon-option">
+                            <input type="radio" class="nes-radio is-dark" name="title-icon" value="cinema">
+                            <span class="icon-label">
+                                <img src="icon/cinema-icon.png" alt="cinema" class="icon-preview">
+                            </span>
+                        </label>
+        
+                        <label class="icon-option">
+                            <input type="radio" class="nes-radio is-dark" name="title-icon" value="game">
+                            <span class="icon-label">
+                                <img src="icon/game-icon.png" alt="game" class="icon-preview">
+                            </span>
+                        </label>
+        
+                        <label class="icon-option">
+                            <input type="radio" class="nes-radio is-dark" name="title-icon" value="novel">
+                            <span class="icon-label">
+                                <img src="icon/novel-icon.png" alt="novel" class="icon-preview">
+                            </span>
+                        </label>
+        
+                        <label class="icon-option">
+                            <input type="radio" class="nes-radio is-dark" name="title-icon" value="stage">
+                            <span class="icon-label">
+                                <img src="icon/stage-icon.png" alt="stage" class="icon-preview">
+                            </span>
+                        </label>
+
+                        <label class="icon-option">
+                            <input type="radio" class="nes-radio is-dark" name="title-icon" value="soda">
+                            <span class="icon-label">
+                                <img src="icon/soda-icon.png" alt="soda" class="icon-preview">
+                            </span>
+                        </label>
+
+                        <label class="icon-option">
+                            <input type="radio" class="nes-radio is-dark" name="title-icon" value="ribon">
+                            <span class="icon-label">
+                                <img src="icon/ribon-icon.png" alt="ribon" class="icon-preview">
+                            </span>
+                        </label>                        
+
+                        <label class="icon-option">
+                            <input type="radio" class="nes-radio is-dark" name="title-icon" value="star">
+                            <span class="icon-label">
+                                <img src="icon/star-icon.png" alt="star" class="icon-preview">
+                            </span>
+                        </label>
+
+                        <label class="icon-option">
+                            <input type="radio" class="nes-radio is-dark" name="title-icon" value="mouse">
+                            <span class="icon-label">
+                                <img src="icon/mouse-icon.png" alt="mouse" class="icon-preview">
+                            </span>
+                        </label>                            
                     </div>
                 </div>
             </form>

@@ -1,4 +1,27 @@
 // ========================================
+// 0. アイコン選択機能（追加）
+// ========================================
+
+let selectedIcon = null;
+
+document.addEventListener('DOMContentLoaded', function() {
+    const radioButtons = document.querySelectorAll('input[name="title-icon"]');
+    
+    radioButtons.forEach(radio => {
+        radio.addEventListener('change', function() {
+            if (this.value === 'none') {
+                selectedIcon = null;
+            } else {
+                selectedIcon = `icon/${this.value}-icon.png`;
+            }
+            
+            // プレビューを更新
+            updatePreview();
+        });
+    });
+});
+
+// ========================================
 // 1. リアルタイムプレビュー機能
 // ========================================
 
@@ -164,11 +187,13 @@ function updatePreview() {
                     <!--右側：タイトル、ジャンル、タグ-->
                     <div style="flex: 1; display: flex; flex-direction: column; gap: 10px;">
 
-                        <!--タイトル表示-->
+                        <!-- タイトル表示（アイコン付き）★ここを修正★ -->
                         ${title ? `
                             <div style="background: rgba(255, 255, 255, 0.7); border: 3px solid #000; padding: 8px;">
-                                <p style="font-size: 14px; margin: 0;">
-                                    <span style="color: #222222;">たいとる：</span>${escapeHtml(title)}
+                                <p style="font-size: 15px; margin: 0; display: flex; align-items: center; gap: 8px;">
+                                    <span style="color: #222222;">たいとる：</span>
+                                    <span>${escapeHtml(title)}</span>
+                                    ${selectedIcon ? `<img src="${selectedIcon}" alt="icon" style="width: 45px; height: 45px; vertical-align: middle;">` : ''}
                                 </p>
                             </div>
                         ` : ''}
@@ -176,7 +201,7 @@ function updatePreview() {
                         <!--ジャンル表示-->
                         ${genre ? `
                             <div style="background: rgba(255, 255, 255, 0.7); border: 3px solid #000; padding: 8px;">
-                                <p style="font-size: 14px; margin: 0;">
+                                <p style="font-size: 15px; margin: 0;">
                                     <span style="color: #222222;">ぶんるい：</span>${getGenreText(genre)}
                                 </p>
                             </div>
